@@ -1,13 +1,13 @@
 package winnershop
 
-class Item {
-    String name;
-    Double price
-    String photo
-    String categoryName
+import domain.BaseEntity
 
+class Item extends BaseEntity{
 
+    String itemName;
+    Double itemPrice;
 
+    static belongsTo = [category:Category,photo:Photo,color:Color]
     static constraints = {
     }
 }
