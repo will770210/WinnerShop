@@ -63,6 +63,52 @@ class CategoryController {
 
     }
 
+    def update={
+        def result = [:]
+        Category category
+        try {
+            if (request.JSON) {
+                JSONObject paramaJSONObject = request.JSON
+
+                if (paramaJSONObject instanceof JSONObject) {
+                    def params = [:]
+                    params["categoryName"] = paramaJSONObject.getString("categoryName");
+                    params["categoryId"] = paramaJSONObject.getString("categoryId")
+                    params["userId"] = paramaJSONObject.getString("userId")
+
+                    if (params["categoryName"] && params["userId"] && params["categoryId"]) {
+                        category = categoryService.queryCategory(params)
+                        if(category){
+                            category = categoryService.updateCategory(params)
+                            result["status"] = 1
+                            result["message"] = "Category update success!!"
+                        }else{
+                            result["status"] = -1
+                            result["message"] = "Can't fine category to update!!"
+                        }
+
+                    }
+                } else {
+                    result["status"] = -1
+                    result["message"] = "Params format is incorrect."
+
+                }
+            } else {
+                result["status"] = -1
+                result["message"] = "Params is null."
+            }
+
+
+        } catch (e) {
+            result["status"] = -1
+            result["message"] = "Create category exception:${e.getMessage()}."
+            e.printStackTrace()
+        } finally {
+            result["category"] = category;
+            render result as JSON;
+        }
+    }
+
     def create = {
         def result = [:]
         Category category
@@ -76,10 +122,67 @@ class CategoryController {
                     params["userId"] = paramaJSONObject.getString("userId")
 
                     if (params["categoryName"] && params["userId"]) {
-                        category = categoryService.create(params)
+                        category = categoryService.queryCategoryByCategoryName(params["categoryName"],params["userId"])
+                        if(category){
+                            result["status"] = 1
+                            result["message"] = "Ctegory create success."
+                            category = categoryService.createCategory(params,params["userId"])
+                        }else{
+                            result["status"] = -1
+                            result["message"] = "Ctegory had exist."
+
+                        }
+
                     }
                 } else {
-                    result["status"] = 1
+                    result["status"] = -1
+                    result["message"] = "Params format is incorrect."
+
+                }
+            } else {
+                result["status"] = -1
+                result["message"] = "Params is null."
+            }
+
+
+        } catch (e) {
+            result["status"] = -1
+            result["message"] = "Create category exception:${e.getMessage()}."
+            e.printStackTrace()
+        } finally {
+            result["category"] = category;
+            render result as JSON;
+        }
+
+
+    }
+
+    def delete = {
+        def result = [:]
+        Category category
+        try {
+            if (request.JSON) {
+                JSONObject paramaJSONObject = request.JSON
+
+                if (paramaJSONObject instanceof JSONObject) {
+                    def params = [:]
+                    params["categoryId"] = paramaJSONObject.getString("categoryId");
+                    params["userId"] = paramaJSONObject.getString("userId")
+
+                    if (params["categoryId"] && params["userId"]) {
+                        category = categoryService.queryCategory(params)
+                        if(category){
+                            categoryService.deleteCategory(category)
+                            result["status"] = 1
+                            result["message"] = "Delete category success."
+                        }else{
+                            result["status"] = -1
+                            result["message"] = "Can't find category to delete."
+                        }
+
+                    }
+                } else {
+                    result["status"] = -1
                     result["message"] = "Params format is incorrect."
 
                 }

@@ -1,11 +1,13 @@
 package helper
 
+import org.grails.datastore.mapping.query.Query
+
 /**
  * Created by huangweihao on 2016/9/3.
  */
 class WhoColumnsValueGenerator {
 
-    static generateForCreation(int userId) {
+    static generateForCreation(Integer userId) {
         def now = new Date();
         return [
                 createdUser : userId,
@@ -15,7 +17,7 @@ class WhoColumnsValueGenerator {
         ]
     }
 
-    static generateForUpdate(int userId) {
+    static generateForUpdate(Integer userId) {
 
         def now = new Date();
         return [

@@ -15,4 +15,8 @@ class BaseService {
         }
 
     }
+
+    def delete(Object obj){
+        obj.delete();
+    }
 }
