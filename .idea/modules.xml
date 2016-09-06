@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WinnerShop.iml" filepath="$PROJECT_DIR$/WinnerShop.iml" />
       <module fileurl="file://$PROJECT_DIR$/WinnerShop-grailsPlugins.iml" filepath="$PROJECT_DIR$/WinnerShop-grailsPlugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/restapidoc-inplacePlugin.iml" filepath="$PROJECT_DIR$/restapidoc-inplacePlugin.iml" />
     </modules>
   </component>
 </project>

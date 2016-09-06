@@ -1,10 +1,16 @@
 package winnershop
 
-import grails.converters.JSON
-import org.codehaus.groovy.grails.web.json.JSONObject
 
-class CategoryController {
+import grails.converters.JSON
+import grails.rest.RestfulController
+import org.codehaus.groovy.grails.web.json.JSONObject
+import org.restapidoc.annotation.RestApi
+
+@RestApi(name = "Category services", description = "Cateogry CRUD API")
+class CategoryController extends RestfulController{
     def categoryService
+    static responseFormats = ['json']
+
 
     def query = {
 
@@ -63,6 +69,7 @@ class CategoryController {
 
     }
 
+
     def update={
         def result = [:]
         Category category
@@ -108,6 +115,7 @@ class CategoryController {
             render result as JSON;
         }
     }
+
 
     def create = {
         def result = [:]

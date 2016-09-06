@@ -1,0 +1,11 @@
+{
+   "basePath": "Fill with basePath config",
+   "apis": [{
+      "methods": [],
+      "jsondocId": "e63132f8-c36f-445a-a157-e6babae41533",
+      "description": "Cateogry CRUD API",
+      "name": "Category services"
+   }],
+   "objects": [],
+   "version": "0.1.1"
+}
