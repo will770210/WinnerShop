@@ -76,8 +76,8 @@ grails.project.dependency.resolution = {
         //swaggydoc api documention
 //        ompile ":swaggydoc:0.28.0"
 
-        compile ":rest-api-doc:0.6.1"
-        runtime ':resources:1.2.14'
+//        compile ":rest-api-doc:0.6.1"
+//        runtime ':resources:1.2.14'
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"

@@ -4,10 +4,8 @@ package winnershop
 import grails.converters.JSON
 import grails.rest.RestfulController
 import org.codehaus.groovy.grails.web.json.JSONObject
-import org.restapidoc.annotation.RestApi
 
-@RestApi(name = "Category services", description = "Cateogry CRUD API")
-class CategoryController extends RestfulController{
+class CategoryController{
     def categoryService
     static responseFormats = ['json']
 
@@ -86,7 +84,7 @@ class CategoryController extends RestfulController{
                     if (params["categoryName"] && params["userId"] && params["categoryId"]) {
                         category = categoryService.queryCategory(params)
                         if(category){
-                            category = categoryService.updateCategory(params)
+                            category = categoryService.updateCategory(category,params,params["userId"])
                             result["status"] = 1
                             result["message"] = "Category update success!!"
                         }else{
@@ -132,12 +130,12 @@ class CategoryController extends RestfulController{
                     if (params["categoryName"] && params["userId"]) {
                         category = categoryService.queryCategoryByCategoryName(params["categoryName"],params["userId"])
                         if(category){
+                            result["status"] = -1
+                            result["message"] = "Ctegory had exist."
+                        }else{
                             result["status"] = 1
                             result["message"] = "Ctegory create success."
                             category = categoryService.createCategory(params,params["userId"])
-                        }else{
-                            result["status"] = -1
-                            result["message"] = "Ctegory had exist."
 
                         }
 
