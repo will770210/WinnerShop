@@ -1,12 +1,11 @@
 package winnershop
 
-
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.JSONObject
 
-class CategoryController extends BaseController{
-    def categoryService
+class ColorController extends BaseController {
 
+    def colorService
 
     def query = {
 
@@ -17,38 +16,29 @@ class CategoryController extends BaseController{
                 JSONObject paramaJSONObject = request.JSON
 
                 if (paramaJSONObject instanceof JSONObject) {
-                    def params = [:]
-                    params["userId"] = paramaJSONObject.getString("userId")
-                    params["queryType"] = paramaJSONObject.getString("queryType")
-                    List<Category> categoryList
-                    if(params["queryType"].toString().equalsIgnoreCase("user")){
-                        result["message"] = "Query cateogry by params:${params}."
-                        categoryList = Category.findAllByCreatedUser(params["userId"]);
+                    result["message"] = "Query cateogry all."
+                    List<Color> colorList = Color.findAll();
 
-                    }else {
-                        result["message"] = "Query cateogry all."
-                        categoryList = Category.findAll();
-                    }
 
                     result["status"] = 1
-                    result["categoryList"] = convertListToMapList(categoryList);
+                    result["colorList"] = convertListToMapList(colorList);
 
                 } else {
 
                     result["status"] = -1
                     result["message"] = "Params format is incorrect."
-                    result["categoryList"] = []
+                    result["colorList"] = []
                 }
             } else {
                 result["status"] = -1
                 result["message"] = "Params is nulls."
-                result["categoryList"] = []
+                result["colorList"] = []
             }
 
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Create color exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -58,7 +48,7 @@ class CategoryController extends BaseController{
     }
 
 
-    def update={
+    def update = {
         def result = [:]
         try {
             if (request.JSON) {
@@ -66,20 +56,20 @@ class CategoryController extends BaseController{
 
                 if (paramaJSONObject instanceof JSONObject) {
                     def params = [:]
-                    params["categoryName"] = paramaJSONObject.getString("categoryName");
-                    params["categoryId"] = paramaJSONObject.getString("categoryId")
-                    params["userId"] = paramaJSONObject.getString("userId")
+                    params["colorName"] = paramaJSONObject.getString("colorName");
+                    params["colorCode"] = paramaJSONObject.getString("colorCode");
+                    params["colorId"] = paramaJSONObject.getInt("colorId");
 
-                    if (params["categoryName"] && params["userId"] && params["categoryId"]) {
-                        Category category = categoryService.queryCategory(params)
-                        if(category){
-                            category = categoryService.updateCategory(category,params,params["userId"])
+                    if (params["colorName"] && params["colorCode"] && params["colorId"]) {
+                        Color color = colorService.queryColor(params)
+                        if (color) {
+                            color = colorService.updateColor(color, params, null)
                             result["status"] = 1
-                            result["message"] = "Category update success!!"
-                            result["category"] = convertObjectToMap(category);
-                        }else{
+                            result["message"] = "Color update success!!"
+                            result["color"] = convertObjectToMap(color);
+                        } else {
                             result["status"] = -1
-                            result["message"] = "Can't fine category to update!!"
+                            result["message"] = "Can't fine color to update!!"
                         }
 
                     } else {
@@ -99,7 +89,7 @@ class CategoryController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Create color exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -117,20 +107,20 @@ class CategoryController extends BaseController{
 
                 if (paramaJSONObject instanceof JSONObject) {
                     def params = [:]
-                    params["categoryName"] = paramaJSONObject.getString("categoryName");
-                    params["userId"] = paramaJSONObject.getString("userId")
+                    params["colorName"] = paramaJSONObject.getString("colorName");
+                    params["colorCode"] = paramaJSONObject.getString("colorCode")
 
-                    if (params["categoryName"] && params["userId"]) {
-                        Category category = categoryService.queryCategoryByCategoryName(params["categoryName"],params["userId"])
-                        if(category){
+                    if (params["colorName"] && params["colorCode"]) {
+                        Color color = colorService.queryColorByColorName(params["colorName"], null)
+                        if (color) {
                             result["status"] = -1
                             result["message"] = "Ctegory had exist."
-                        }else{
+                        } else {
 
-                            category = categoryService.createCategory(params,params["userId"])
+                            color = colorService.createColor(params, params["userId"])
                             result["status"] = 1
                             result["message"] = "Ctegory create success."
-                            result["category"] = convertObjectToMap(category);
+                            result["color"] = convertObjectToMap(color);
 
                         }
 
@@ -151,7 +141,7 @@ class CategoryController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Create color exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -170,19 +160,18 @@ class CategoryController extends BaseController{
 
                 if (paramaJSONObject instanceof JSONObject) {
                     def params = [:]
-                    params["categoryId"] = paramaJSONObject.getString("categoryId");
-                    params["userId"] = paramaJSONObject.getString("userId")
+                    params["colorId"] = paramaJSONObject.getString("colorId");
 
-                    if (params["categoryId"] && params["userId"]) {
-                        Category category = categoryService.queryCategory(params)
-                        if(category){
-                            categoryService.deleteCategory(category)
+                    if (params["colorId"]) {
+                        Color color = colorService.queryColor(params)
+                        if (color) {
+                            colorService.deleteColor(color)
                             result["status"] = 1
-                            result["message"] = "Delete category success."
-                            result["category"] = convertObjectToMap(category);
-                        }else{
+                            result["message"] = "Delete color success."
+                            result["color"] = convertObjectToMap(color);
+                        } else {
                             result["status"] = -1
-                            result["message"] = "Can't find category to delete."
+                            result["message"] = "Can't find color to delete."
                         }
 
                     } else {
@@ -202,7 +191,7 @@ class CategoryController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Create color exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 

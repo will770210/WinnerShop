@@ -9,5 +9,6 @@ class Item extends BaseEntity{
 
     static belongsTo = [category:Category,photo:Photo,color:Color]
     static constraints = {
+        itemName unique: true
     }
 }

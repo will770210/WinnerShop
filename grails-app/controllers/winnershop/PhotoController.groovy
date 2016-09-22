@@ -1,12 +1,12 @@
 package winnershop
 
-
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.JSONObject
 
-class CategoryController extends BaseController{
-    def categoryService
+import java.text.SimpleDateFormat
 
+class PhotoController extends BaseController{
+    def photoService
 
     def query = {
 
@@ -17,38 +17,37 @@ class CategoryController extends BaseController{
                 JSONObject paramaJSONObject = request.JSON
 
                 if (paramaJSONObject instanceof JSONObject) {
+
                     def params = [:]
                     params["userId"] = paramaJSONObject.getString("userId")
                     params["queryType"] = paramaJSONObject.getString("queryType")
-                    List<Category> categoryList
-                    if(params["queryType"].toString().equalsIgnoreCase("user")){
-                        result["message"] = "Query cateogry by params:${params}."
-                        categoryList = Category.findAllByCreatedUser(params["userId"]);
+                    List<Photo> photoList
+                    if (params["queryType"].toString().equalsIgnoreCase("user")) {
+                        result["message"] = "Query photo by params:${params}."
+                        photoList = Photo.findAllByCreatedUser(params["userId"]);
 
-                    }else {
-                        result["message"] = "Query cateogry all."
-                        categoryList = Category.findAll();
+                    } else {
+                        result["message"] = "Query all photo."
+                        photoList = Photo.findAll();
                     }
 
                     result["status"] = 1
-                    result["categoryList"] = convertListToMapList(categoryList);
+                    result["photoList"] = convertListToMapList(photoList);
 
                 } else {
 
                     result["status"] = -1
                     result["message"] = "Params format is incorrect."
-                    result["categoryList"] = []
                 }
             } else {
                 result["status"] = -1
                 result["message"] = "Params is nulls."
-                result["categoryList"] = []
             }
 
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Create photo exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -58,28 +57,33 @@ class CategoryController extends BaseController{
     }
 
 
-    def update={
+    def update = {
         def result = [:]
+
         try {
             if (request.JSON) {
                 JSONObject paramaJSONObject = request.JSON
 
                 if (paramaJSONObject instanceof JSONObject) {
                     def params = [:]
-                    params["categoryName"] = paramaJSONObject.getString("categoryName");
-                    params["categoryId"] = paramaJSONObject.getString("categoryId")
-                    params["userId"] = paramaJSONObject.getString("userId")
+                    params["photoName"] = paramaJSONObject.getString("photoName");
+                    params["photoUrl"] = paramaJSONObject.getString("photoUrl");
+                    params["photoSize"] = paramaJSONObject.getString("photoSize");
+                    params["fileType"] = paramaJSONObject.getString("fileType");
+                    params["userId"] = paramaJSONObject.getString("userId");
+                    params["photoId"] = paramaJSONObject.getString("photoId");
 
-                    if (params["categoryName"] && params["userId"] && params["categoryId"]) {
-                        Category category = categoryService.queryCategory(params)
-                        if(category){
-                            category = categoryService.updateCategory(category,params,params["userId"])
+
+                    if (params["photoName"] && params["photoUrl"] && params["photoSize"] && params["fileType"]&&params["photoId"]) {
+                        Photo photo = photoService.queryPhoto(params)
+                        if (photo) {
+                            photo = photoService.updatePhoto(photo, params, params["userId"])
                             result["status"] = 1
-                            result["message"] = "Category update success!!"
-                            result["category"] = convertObjectToMap(category);
-                        }else{
+                            result["message"] = "photo update success!!"
+                            result["photo"] = convertObjectToMap(photo);
+                        } else {
                             result["status"] = -1
-                            result["message"] = "Can't fine category to update!!"
+                            result["message"] = "Can't fine photo to update!!"
                         }
 
                     } else {
@@ -99,7 +103,7 @@ class CategoryController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Create photo exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -117,20 +121,24 @@ class CategoryController extends BaseController{
 
                 if (paramaJSONObject instanceof JSONObject) {
                     def params = [:]
-                    params["categoryName"] = paramaJSONObject.getString("categoryName");
-                    params["userId"] = paramaJSONObject.getString("userId")
+                    params["photoName"] = paramaJSONObject.getString("photoName");
+                    params["photoUrl"] = paramaJSONObject.getString("photoUrl");
+                    params["photoSize"] = paramaJSONObject.getString("photoSize");
+                    params["fileType"] = paramaJSONObject.getString("fileType");
+                    params["userId"] = paramaJSONObject.getString("userId");
 
-                    if (params["categoryName"] && params["userId"]) {
-                        Category category = categoryService.queryCategoryByCategoryName(params["categoryName"],params["userId"])
-                        if(category){
+
+                    if (params["photoName"] && params["userId"] && params["photoUrl"] && params["photoSize"] && params["fileType"] && params["userId"]) {
+
+                        Photo photo = photoService.queryPhotoByPhotoName(params["photoName"],params["userId"])
+                        if (photo) {
                             result["status"] = -1
-                            result["message"] = "Ctegory had exist."
-                        }else{
-
-                            category = categoryService.createCategory(params,params["userId"])
+                            result["message"] = "Photo name is exist!"
+                        } else {
+                            photo = photoService.createPhoto(params, params["userId"])
                             result["status"] = 1
-                            result["message"] = "Ctegory create success."
-                            result["category"] = convertObjectToMap(category);
+                            result["message"] = "Photo created success."
+                            result["photo"] = convertObjectToMap(photo);
 
                         }
 
@@ -151,7 +159,7 @@ class CategoryController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Create photo exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -170,19 +178,19 @@ class CategoryController extends BaseController{
 
                 if (paramaJSONObject instanceof JSONObject) {
                     def params = [:]
-                    params["categoryId"] = paramaJSONObject.getString("categoryId");
-                    params["userId"] = paramaJSONObject.getString("userId")
+                    params["photoId"] = paramaJSONObject.getString("photoId");
+                    params["userId"] = paramaJSONObject.getString("userId");
 
-                    if (params["categoryId"] && params["userId"]) {
-                        Category category = categoryService.queryCategory(params)
-                        if(category){
-                            categoryService.deleteCategory(category)
+                    if (params["photoId"] && params["userId"]) {
+                        Photo photo = photoService.queryPhoto(params)
+                        if (photo) {
+                            photoService.deletePhoto(photo)
+                            result["photo"] = convertObjectToMap(photo);
                             result["status"] = 1
-                            result["message"] = "Delete category success."
-                            result["category"] = convertObjectToMap(category);
-                        }else{
+                            result["message"] = "Delete photo success."
+                        } else {
                             result["status"] = -1
-                            result["message"] = "Can't find category to delete."
+                            result["message"] = "Can't find photo to delete."
                         }
 
                     } else {
@@ -202,7 +210,7 @@ class CategoryController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Create photo exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -211,4 +219,6 @@ class CategoryController extends BaseController{
 
 
     }
+
+
 }
