@@ -47,7 +47,7 @@ class PhotoController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create photo exception:${e.getMessage()}."
+            result["message"] = "Query photo exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -103,7 +103,7 @@ class PhotoController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create photo exception:${e.getMessage()}."
+            result["message"] = "Update photo exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -210,7 +210,7 @@ class PhotoController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create photo exception:${e.getMessage()}."
+            result["message"] = "Delete photo exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 

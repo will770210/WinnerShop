@@ -46,7 +46,7 @@ class ItemController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create item exception:${e.getMessage()}."
+            result["message"] = "Query item exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -103,7 +103,7 @@ class ItemController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create item exception:${e.getMessage()}."
+            result["message"] = "Update item exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -211,7 +211,7 @@ class ItemController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create item exception:${e.getMessage()}."
+            result["message"] = "Delete item exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 

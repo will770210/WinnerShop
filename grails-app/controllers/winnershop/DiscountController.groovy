@@ -22,11 +22,11 @@ class DiscountController extends BaseController{
                     params["queryType"] = paramaJSONObject.getString("queryType")
                     List<Discount> discountList
                     if(params["queryType"].toString().equalsIgnoreCase("user")){
-                        result["message"] = "Query cateogry by params:${params}."
+                        result["message"] = "Query discount by params:${params}."
                         discountList = Discount.findAllByCreatedUser(params["userId"]);
 
                     }else {
-                        result["message"] = "Query cateogry all."
+                        result["message"] = "Query discount all."
                         discountList = Discount.findAll();
                     }
 
@@ -37,18 +37,16 @@ class DiscountController extends BaseController{
 
                     result["status"] = -1
                     result["message"] = "Params format is incorrect."
-                    result["discountList"] = []
                 }
             } else {
                 result["status"] = -1
                 result["message"] = "Params is nulls."
-                result["discountList"] = []
             }
 
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create discount exception:${e.getMessage()}."
+            result["message"] = "Query discount exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -101,7 +99,7 @@ class DiscountController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create discount exception:${e.getMessage()}."
+            result["message"] = "Update discount exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -127,7 +125,7 @@ class DiscountController extends BaseController{
                     if (params["discountTitle"] && params["discountType"]  && params["discountValue"]  && params["userId"]) {
                         def discount = discountService.createDiscount(params, params["userId"])
                         result["status"] = 1
-                        result["message"] = "Ctegory create success."
+                        result["message"] = "Discount create success."
                         result["discount"] = convertObjectToMap(discount);
                     } else {
                         result["status"] = -1
@@ -197,7 +195,7 @@ class DiscountController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create discount exception:${e.getMessage()}."
+            result["message"] = "Delete discount exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 

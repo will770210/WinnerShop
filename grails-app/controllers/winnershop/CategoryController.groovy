@@ -48,7 +48,7 @@ class CategoryController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Query category exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -99,7 +99,7 @@ class CategoryController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Update category exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -124,12 +124,12 @@ class CategoryController extends BaseController{
                         Category category = categoryService.queryCategoryByCategoryName(params["categoryName"],params["userId"])
                         if(category){
                             result["status"] = -1
-                            result["message"] = "Ctegory had exist."
+                            result["message"] = "Category had exist."
                         }else{
 
                             category = categoryService.createCategory(params,params["userId"])
                             result["status"] = 1
-                            result["message"] = "Ctegory create success."
+                            result["message"] = "Category create success."
                             result["category"] = convertObjectToMap(category);
 
                         }
@@ -202,7 +202,7 @@ class CategoryController extends BaseController{
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create category exception:${e.getMessage()}."
+            result["message"] = "Delete category exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 

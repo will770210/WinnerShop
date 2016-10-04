@@ -38,7 +38,7 @@ class ColorController extends BaseController {
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create color exception:${e.getMessage()}."
+            result["message"] = "Query color exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -89,7 +89,7 @@ class ColorController extends BaseController {
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create color exception:${e.getMessage()}."
+            result["message"] = "Update color exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
@@ -114,12 +114,12 @@ class ColorController extends BaseController {
                         Color color = colorService.queryColorByColorName(params["colorName"], null)
                         if (color) {
                             result["status"] = -1
-                            result["message"] = "Ctegory had exist."
+                            result["message"] = "Color had exist."
                         } else {
 
                             color = colorService.createColor(params, params["userId"])
                             result["status"] = 1
-                            result["message"] = "Ctegory create success."
+                            result["message"] = "Color create success."
                             result["color"] = convertObjectToMap(color);
 
                         }
@@ -191,7 +191,7 @@ class ColorController extends BaseController {
 
         } catch (e) {
             result["status"] = -1
-            result["message"] = "Create color exception:${e.getMessage()}."
+            result["message"] = "Delete color exception:${e.getMessage()}."
             e.printStackTrace()
         } finally {
 
