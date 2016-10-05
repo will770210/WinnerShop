@@ -31,7 +31,7 @@ class DiscountController extends BaseController{
                     }
 
                     result["status"] = 1
-                    result["discountList"] = convertListToMapList(discountList);
+                    result["discountList"] = convertFormatService.convertListToMapList(discountList);
 
                 } else {
 
@@ -76,7 +76,7 @@ class DiscountController extends BaseController{
                             discount = discountService.updateDiscount(discount,params,params["userId"])
                             result["status"] = 1
                             result["message"] = "Discount update success!!"
-                            result["discount"] = convertObjectToMap(discount);
+                            result["discount"] = convertFormatService.convertObjectToMap(discount);
                         }else{
                             result["status"] = -1
                             result["message"] = "Can't fine discount to update!!"
@@ -126,7 +126,7 @@ class DiscountController extends BaseController{
                         def discount = discountService.createDiscount(params, params["userId"])
                         result["status"] = 1
                         result["message"] = "Discount create success."
-                        result["discount"] = convertObjectToMap(discount);
+                        result["discount"] = convertFormatService.convertObjectToMap(discount);
                     } else {
                         result["status"] = -1
                         result["message"] = "Params is miss."
@@ -172,7 +172,7 @@ class DiscountController extends BaseController{
                             discountService.deleteDiscount(discount)
                             result["status"] = 1
                             result["message"] = "Delete discount success."
-                            result["discount"] = convertObjectToMap(discount);
+                            result["discount"] = convertFormatService.convertObjectToMap(discount);
                         }else{
                             result["status"] = -1
                             result["message"] = "Can't find discount to delete."

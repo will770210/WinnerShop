@@ -50,3 +50,9 @@ atlassian-ide-plugin.xml
 
 .classpath
 .project
+
+target/stacktrace.log
+
+*.log
+
+.idea/workspace.xml

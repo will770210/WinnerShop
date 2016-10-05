@@ -7,6 +7,7 @@ import org.codehaus.groovy.grails.web.json.JSONObject
 class ItemController extends BaseController{
     def itemService
 
+
     def query = {
 
         def result = [:]
@@ -31,7 +32,7 @@ class ItemController extends BaseController{
                     }
 
                     result["status"] = 1
-                    result["itemList"] = convertListToMapList(itemList);
+                    result["itemList"] = convertFormatService.convertListToMapList(itemList);
 
                 } else {
 
@@ -80,7 +81,7 @@ class ItemController extends BaseController{
                             item = itemService.updateItem(item, params, params["userId"])
                             result["status"] = 1
                             result["message"] = "item update success!!"
-                            result["item"] = convertObjectToMap(item);
+                            result["item"] = convertFormatService.convertObjectToMap(item);
                         } else {
                             result["status"] = -1
                             result["message"] = "Can't fine item to update!!"
@@ -139,7 +140,7 @@ class ItemController extends BaseController{
                             item = itemService.createItem(params, params["userId"])
                             result["status"] = 1
                             result["message"] = "Item created success."
-                            result["item"] = convertObjectToMap(item);
+                            result["item"] = convertFormatService.convertObjectToMap(item);
 
                         }
 
@@ -186,7 +187,7 @@ class ItemController extends BaseController{
                         Item item = itemService.queryItem(params)
                         if (item) {
                             itemService.deleteItem(item)
-                            result["item"] = convertObjectToMap(item);
+                            result["item"] = convertFormatService.convertObjectToMap(item);
                             result["status"] = 1
                             result["message"] = "Delete item success."
                         } else {

@@ -32,7 +32,7 @@ class PhotoController extends BaseController{
                     }
 
                     result["status"] = 1
-                    result["photoList"] = convertListToMapList(photoList);
+                    result["photoList"] = convertFormatService.convertListToMapList(photoList);
 
                 } else {
 
@@ -80,7 +80,7 @@ class PhotoController extends BaseController{
                             photo = photoService.updatePhoto(photo, params, params["userId"])
                             result["status"] = 1
                             result["message"] = "photo update success!!"
-                            result["photo"] = convertObjectToMap(photo);
+                            result["photo"] = convertFormatService.convertObjectToMap(photo);
                         } else {
                             result["status"] = -1
                             result["message"] = "Can't fine photo to update!!"
@@ -138,7 +138,7 @@ class PhotoController extends BaseController{
                             photo = photoService.createPhoto(params, params["userId"])
                             result["status"] = 1
                             result["message"] = "Photo created success."
-                            result["photo"] = convertObjectToMap(photo);
+                            result["photo"] = convertFormatService.convertObjectToMap(photo);
 
                         }
 
@@ -185,7 +185,7 @@ class PhotoController extends BaseController{
                         Photo photo = photoService.queryPhoto(params)
                         if (photo) {
                             photoService.deletePhoto(photo)
-                            result["photo"] = convertObjectToMap(photo);
+                            result["photo"] = convertFormatService.convertObjectToMap(photo);
                             result["status"] = 1
                             result["message"] = "Delete photo success."
                         } else {

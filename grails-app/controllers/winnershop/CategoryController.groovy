@@ -7,7 +7,6 @@ import org.codehaus.groovy.grails.web.json.JSONObject
 class CategoryController extends BaseController{
     def categoryService
 
-
     def query = {
 
         def result = [:]
@@ -31,7 +30,7 @@ class CategoryController extends BaseController{
                     }
 
                     result["status"] = 1
-                    result["categoryList"] = convertListToMapList(categoryList);
+                    result["categoryList"] = convertFormatService.convertListToMapList(categoryList);
 
                 } else {
 
@@ -76,7 +75,7 @@ class CategoryController extends BaseController{
                             category = categoryService.updateCategory(category,params,params["userId"])
                             result["status"] = 1
                             result["message"] = "Category update success!!"
-                            result["category"] = convertObjectToMap(category);
+                            result["category"] = convertFormatService.convertObjectToMap(category);
                         }else{
                             result["status"] = -1
                             result["message"] = "Can't fine category to update!!"
@@ -130,7 +129,7 @@ class CategoryController extends BaseController{
                             category = categoryService.createCategory(params,params["userId"])
                             result["status"] = 1
                             result["message"] = "Category create success."
-                            result["category"] = convertObjectToMap(category);
+                            result["category"] = convertFormatService.convertObjectToMap(category);
 
                         }
 
@@ -179,7 +178,7 @@ class CategoryController extends BaseController{
                             categoryService.deleteCategory(category)
                             result["status"] = 1
                             result["message"] = "Delete category success."
-                            result["category"] = convertObjectToMap(category);
+                            result["category"] = convertFormatService.convertObjectToMap(category);
                         }else{
                             result["status"] = -1
                             result["message"] = "Can't find category to delete."

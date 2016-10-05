@@ -23,15 +23,4 @@ class BaseService {
         obj.delete();
     }
 
-    def convertObjectToMap(Object object){
-        def objectMap = [:]
-        object.properties.each {p->
-            if(p.value instanceof Date){
-                objectMap[p.key] = sdFormat.format(p.value)
-            }else{
-                objectMap[p.key] = p.value
-            }
-        }
-        return objectMap
-    }
 }

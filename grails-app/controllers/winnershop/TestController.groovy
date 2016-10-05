@@ -7,7 +7,9 @@ class TestController {
         def categoryList = Item.findAll();
         log.info(categoryList.size())
         categoryList.each{
-            render it.properties
+            it.getClass().getDeclaredFields().each{
+                render it.getName() + " " + it.get(it)
+            }
         }
 
         //render log.info(it.properties)

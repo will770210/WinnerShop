@@ -21,7 +21,7 @@ class ColorController extends BaseController {
 
 
                     result["status"] = 1
-                    result["colorList"] = convertListToMapList(colorList);
+                    result["colorList"] = convertFormatService.convertListToMapList(colorList);
 
                 } else {
 
@@ -66,7 +66,7 @@ class ColorController extends BaseController {
                             color = colorService.updateColor(color, params, null)
                             result["status"] = 1
                             result["message"] = "Color update success!!"
-                            result["color"] = convertObjectToMap(color);
+                            result["color"] = convertFormatService.convertObjectToMap(color);
                         } else {
                             result["status"] = -1
                             result["message"] = "Can't fine color to update!!"
@@ -120,7 +120,7 @@ class ColorController extends BaseController {
                             color = colorService.createColor(params, params["userId"])
                             result["status"] = 1
                             result["message"] = "Color create success."
-                            result["color"] = convertObjectToMap(color);
+                            result["color"] = convertFormatService.convertObjectToMap(color);
 
                         }
 
@@ -168,7 +168,7 @@ class ColorController extends BaseController {
                             colorService.deleteColor(color)
                             result["status"] = 1
                             result["message"] = "Delete color success."
-                            result["color"] = convertObjectToMap(color);
+                            result["color"] = convertFormatService.convertObjectToMap(color);
                         } else {
                             result["status"] = -1
                             result["message"] = "Can't find color to delete."
